@@ -1,6 +1,10 @@
-const required = ['BOT_TOKEN', 'ALLOWED_CHAT_ID', 'DATABASE_URL'];
+const botToken = process.env.BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
 
-for (const key of required) {
+if (!botToken) {
+  throw new Error('Missing required environment variable: BOT_TOKEN (or TELEGRAM_BOT_TOKEN)');
+}
+
+for (const key of ['ALLOWED_CHAT_ID', 'DATABASE_URL']) {
   if (!process.env[key]) {
     throw new Error(`Missing required environment variable: ${key}`);
   }
@@ -12,7 +16,7 @@ if (!Number.isSafeInteger(chatId)) {
 }
 
 export const config = Object.freeze({
-  botToken: process.env.BOT_TOKEN,
+  botToken,
   allowedChatId: chatId,
   databaseUrl: process.env.DATABASE_URL,
   timezone: process.env.TZ || 'Asia/Singapore',

@@ -31,7 +31,7 @@ const HELP = [
   '24.50 grab home',
   '32 grabfood',
   '',
-  '/today · /month · /recent · /undo',
+  '/today · /month · /recent · /undo · /recap',
   '/edit <id> <corrected expense>',
   '',
   'Example: /edit 42 8.50 monster 711',
@@ -98,6 +98,17 @@ async function logExpense(chatId, text) {
   await sendMessage(chatId, formatLogged(tx, todayTotal));
 }
 
+function singaporeDatePartsForBot(date = new Date()) {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: config.timezone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).formatToParts(date);
+  const value = Object.fromEntries(parts.map((part) => [part.type, part.value]));
+  return `${value.year}-${value.month}-${value.day}`;
+}
+
 async function handleMessage(message) {
   const chatId = message?.chat?.id;
   if (!isAllowed(chatId) || typeof message.text !== 'string') return;
@@ -110,6 +121,7 @@ async function handleMessage(message) {
   if (command === '/month') return sendMonth(chatId);
   if (command === '/recent') return sendRecent(chatId);
   if (command === '/undo') return undo(chatId);
+  if (command === '/recap') return sendDailyRecap(chatId, singaporeDatePartsForBot());
   if (command === '/edit') return edit(chatId, text);
   if (text.startsWith('/')) return sendMessage(chatId, '⚠️ Unknown command. Use /start for the tiny command list.');
 

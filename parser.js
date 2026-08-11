@@ -11,23 +11,36 @@ export const CATEGORIES = Object.freeze([
 ]);
 
 const MERCHANT_ALIASES = [
-  { merchant: '7-Eleven', patterns: [/(?:^|\s)7[- ]?eleven(?:\s|$)/i, /(?:^|\s)711(?:\s|$)/i] },
-  { merchant: 'GrabFood', patterns: [/(?:^|\s)grab\s?food(?:\s|$)/i] },
-  { merchant: 'Grab', patterns: [/(?:^|\s)grab(?:ride)?(?:\s|$)/i, /(?:^|\s)grab ride(?:\s|$)/i] },
-  { merchant: 'Starbucks', patterns: [/(?:^|\s)starbucks(?:\s|$)/i] },
-  { merchant: 'Uniqlo', patterns: [/(?:^|\s)uniqlo(?:\s|$)/i] },
-  { merchant: 'Nike', patterns: [/(?:^|\s)nike(?:\s|$)/i] },
-  { merchant: 'Adidas', patterns: [/(?:^|\s)adidas(?:\s|$)/i] },
-  { merchant: 'Spotify', patterns: [/(?:^|\s)spotify(?:\s|$)/i] },
-  { merchant: 'Netflix', patterns: [/(?:^|\s)netflix(?:\s|$)/i] },
-  { merchant: 'YouTube Premium', patterns: [/(?:^|\s)(?:youtube|yt) premium(?:\s|$)/i] },
-  { merchant: 'Apple', patterns: [/(?:^|\s)(?:apple|icloud)(?:\s|$)/i] },
+  { merchant: 'Google One', category: '📱 Bills & Subscriptions', patterns: [/\bgoogle\s*one\b/i] },
+  { merchant: 'iCloud', category: '📱 Bills & Subscriptions', patterns: [/\bicloud\b/i] },
+  { merchant: 'Spotify', category: '📱 Bills & Subscriptions', patterns: [/\bspotify\b/i] },
+  { merchant: 'YouTube Premium', category: '📱 Bills & Subscriptions', patterns: [/\b(?:youtube|yt)\s*premium\b/i] },
+  { merchant: 'Netflix', category: '📱 Bills & Subscriptions', patterns: [/\bnetflix\b/i] },
+  { merchant: 'Anytime Fitness', category: '📱 Bills & Subscriptions', patterns: [/\banytime\s*fitness\b/i, /\baf\s+(?:gym|membership)\b/i] },
+
+  { merchant: 'GrabFood', category: '🛵 GrabFood', patterns: [/\bgrab\s*food\b/i] },
+  { merchant: 'Grab', category: '🚗 GrabRide', patterns: [/\bgrab\s*ride\b/i, /\bgrabride\b/i, /\bgrab\b/i] },
+
+  { merchant: '7-Eleven', category: '🥤 Snacks & Drinks', patterns: [/\b7[- ]?eleven\b/i, /\b711\b/i] },
+  { merchant: 'Starbucks', category: '🥤 Snacks & Drinks', patterns: [/\bstarbucks\b/i] },
+  { merchant: 'Meiji', category: '🥤 Snacks & Drinks', patterns: [/\bmeiji\b/i] },
+
+  { merchant: 'Stuff’d', category: '🍜 Food Outside', patterns: [/\bstuff['’]?d\b/i, /\bstuffd\b/i] },
+  { merchant: 'Subway', category: '🍜 Food Outside', patterns: [/\bsubway\b/i] },
+  { merchant: 'McDonald’s', category: '🍜 Food Outside', patterns: [/\bmcdonald'?s\b/i, /\bmcd\b/i] },
+  { merchant: 'KFC', category: '🍜 Food Outside', patterns: [/\bkfc\b/i] },
+
+  { merchant: 'Uniqlo', category: '🛍️ Shopping', patterns: [/\buniqlo\b/i] },
+  { merchant: 'Nike', category: '🛍️ Shopping', patterns: [/\bnike\b/i] },
+  { merchant: 'Adidas', category: '🛍️ Shopping', patterns: [/\badidas\b/i] },
+  { merchant: 'Shopee', category: '🛍️ Shopping', patterns: [/\bshopee\b/i] },
+  { merchant: 'Lazada', category: '🛍️ Shopping', patterns: [/\blazada\b/i] },
 ];
 
 const CATEGORY_RULES = [
   {
     category: '🛵 GrabFood',
-    patterns: [/\bgrab\s?food\b/i],
+    patterns: [/\bgrab\s*food\b/i],
   },
   {
     category: '🚗 GrabRide',
@@ -35,13 +48,22 @@ const CATEGORY_RULES = [
   },
   {
     category: '🚇 Transport',
-    patterns: [/\bez[- ]?link\b/i, /\bsimplygo\b/i, /\bmrt\b/i, /\bbus\b/i, /\btrain\b/i, /\btransport\b/i, /\bpublic transport\b/i],
+    patterns: [
+      /\bez[- ]?link\b/i,
+      /\bsimplygo\b/i,
+      /\bmrt\b/i,
+      /\bbus\b/i,
+      /\btrain\b/i,
+      /\btransport\b/i,
+      /\bpublic transport\b/i,
+    ],
   },
   {
     category: '🥤 Snacks & Drinks',
     patterns: [
       /\bmonster\b/i,
       /\bred\s?bull\b/i,
+      /\bmeiji\b/i,
       /\bprotein (?:drink|bar|shake)\b/i,
       /\bcoffee\b/i,
       /\bkopi\b/i,
@@ -54,7 +76,21 @@ const CATEGORY_RULES = [
   },
   {
     category: '🍜 Food Outside',
-    patterns: [/\bbreakfast\b/i, /\blunch\b/i, /\bdinner\b/i, /\bsupper\b/i, /\bmeal\b/i, /\bhawker\b/i, /\bfood\b/i, /\brestaurant\b/i],
+    patterns: [
+      /\bbreakfast\b/i,
+      /\blunch\b/i,
+      /\bdinner\b/i,
+      /\bsupper\b/i,
+      /\bmeal\b/i,
+      /\bhawker\b/i,
+      /\brestaurant\b/i,
+      /\bsubway\b/i,
+      /\bstuff['’]?d\b/i,
+      /\bstuffd\b/i,
+      /\bmcdonald'?s\b/i,
+      /\bmcd\b/i,
+      /\bkfc\b/i,
+    ],
   },
   {
     category: '🛍️ Shopping',
@@ -72,6 +108,8 @@ const CATEGORY_RULES = [
       /\bnike\b/i,
       /\badidas\b/i,
       /\buniqlo\b/i,
+      /\bshopee\b/i,
+      /\blazada\b/i,
     ],
   },
   {
@@ -81,17 +119,34 @@ const CATEGORY_RULES = [
       /\bsubscriptions?\b/i,
       /\bspotify\b/i,
       /\bnetflix\b/i,
-      /\b(?:youtube|yt) premium\b/i,
+      /\b(?:youtube|yt)\s*premium\b/i,
       /\bicloud\b/i,
-      /\bgoogle one\b/i,
+      /\bgoogle\s*one\b/i,
       /\bphone bill\b/i,
       /\bgym membership\b/i,
       /\bmembership\b/i,
+      /\banytime\s*fitness\b/i,
     ],
   },
   {
     category: '🎮 Entertainment',
-    patterns: [/\bcinema\b/i, /\bmovie\b/i, /\bgames?\b/i, /\bsteam\b/i, /\bplaystation\b/i, /\bnintendo\b/i, /\bbowling\b/i, /\bconcert\b/i],
+    patterns: [
+      /\bcinema\b/i,
+      /\bmovie\b/i,
+      /\bgames?\b/i,
+      /\bsteam\b/i,
+      /\bplaystation\b/i,
+      /\bnintendo\b/i,
+      /\bbowling\b/i,
+      /\bconcert\b/i,
+    ],
+  },
+  {
+    category: '🧾 Miscellaneous',
+    patterns: [
+      /\bhaircut\b/i,
+      /\bbarber\b/i,
+    ],
   },
 ];
 
@@ -134,7 +189,8 @@ export function parseExpense(input) {
   const merchantMatch = MERCHANT_ALIASES.find(({ patterns }) => patterns.some((pattern) => pattern.test(remainder)));
   const merchant = merchantMatch?.merchant ?? null;
 
-  const category = CATEGORY_RULES.find(({ patterns }) => patterns.some((pattern) => pattern.test(remainder)))?.category
+  const category = merchantMatch?.category
+    ?? CATEGORY_RULES.find(({ patterns }) => patterns.some((pattern) => pattern.test(remainder)))?.category
     ?? '🧾 Miscellaneous';
 
   return {
